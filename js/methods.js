@@ -8,6 +8,12 @@ function addToCart(id) {
   if (lesson.availibility == 0)
     lesson.isSoldOut = true
 
+  for (let i = 0; i < cart.length; i++) {
+    if (cart[i].id == lesson.id) {
+      return
+    }
+  }
+
   return cart.push(lesson)
 }
 
@@ -17,7 +23,8 @@ function removeFromCart(lessonIdx) {
   if (lessonIdx != null && cart.length > 0) {
     const deletCartItem = cart.find((cartItem, i) => {
       if (cartItem?.id == lessonIdx) {
-        cartItem.availibility += 1
+        cartItem.availibility = 5
+        cartItem.isSoldOut = false
         cart.splice(i, 1)
       }
     })

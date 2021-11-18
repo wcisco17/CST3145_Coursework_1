@@ -9,6 +9,7 @@ const lessonsApp = {
     cart: [],
     isCartOpen: false,
     isSuccessOrder: false,
+
     selected: '',
     order: 'Ascending',
     values: ['all', 'subject', 'location', 'price', 'availibility'],
