@@ -1,3 +1,4 @@
+import computed from './computed.js';
 import { lessons } from "./data.js";
 import methods from './methods.js';
 
@@ -7,13 +8,29 @@ const lessonsApp = {
     lessons,
     cart: [],
     isCartOpen: false,
+    isSuccessOrder: false,
+    selected: '',
+    order: 'Ascending',
+    values: ['all', 'subject', 'location', 'price', 'availibility'],
     formState: {
-      textValue: true,
-      numValue: false
+      phoneItem: "",
+      nameItem: "",
+      valid: true,
     }
   },
+
+  updated() {
+    const { nameItem, phoneItem } = this.formState
+
+    const isTextValue = /^[a-zA-Z]+$/.test(nameItem);
+    const isNumberValue = /^[1-9]+$/.test(phoneItem);
+
+    if (isTextValue && isNumberValue) this.formState.valid = false
+    else
+      this.formState.valid = true
+  },
   methods,
-  computed: {}
+  computed
 }
 
 export default lessonsApp;

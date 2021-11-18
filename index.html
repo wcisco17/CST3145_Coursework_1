@@ -45,11 +45,10 @@
           <!-- Start - Select Container -->
           <div class="mb-5 select-container_cus1">
             <div class="select">
-              <select>
-                <option>Sort by</option>
-                <option>Locations</option>
-                <option>Subject</option>
-                <option>Price</option>
+              <select v-model='selected'>
+                <option v-for="item in values">
+                  {{item}}
+                </option>
               </select>
             </div>
           </div>
@@ -58,14 +57,11 @@
           <!-- Start - Sort -->
           <div class="mb-5 select-container_cus2">
             <div class="control">
-              <label class="radio">
-                <input type="radio" name="answer">
-                Ascending
-              </label>
-              <label class="radio">
-                <input type="radio" name="answer">
-                Descending
-              </label>
+              <input v-model='order' value="Ascending" type="radio" id="asc">
+              <label for='asc'>Ascending</label>
+
+              <input v-model='order' value="Descending" type="radio" id="desc">
+              <label for='desc'>Descending</label>
             </div>
           </div>
           <!-- End - Sort -->
@@ -73,7 +69,7 @@
 
         <!-- Start - Card Container -->
         <div class="card-container">
-          <div v-for="lesson in lessons" v-bind:key="lesson.id" class="card">
+          <div v-for="lesson in sortLessons" v-bind:key="lesson.id" class="card">
             <div class="card-image">
               <figure class="image is-4by3">
                 <img alt="Placeholder image" v-bind:src="lesson.url">
@@ -99,6 +95,7 @@
           </div>
         </div>
         <!-- End - Card Container -->
+
       </div>
     </section>
 
@@ -116,27 +113,41 @@
           <!-- Start - Checkout Items -->
           <div class="container">
             <form @submit="submitForm">
+
+              <!-- Start - Notifications -->
+              <div v-bind:class="isSuccessOrder ? '' : 'is-show'" class="notification is-primary">
+                <button v-on:click="reload()" class="delete"></button>
+                <h1 class="title">
+                  Success!
+                </h1>
+                <p>Your order has been placed</p>
+              </div>
+              <!-- End - Notifications -->
+
               <div class="field-header">
                 <h5 class="title is-5 py-4">Your info</h5>
               </div>
               <div class="field">
                 <p class="control has-icons-left has-icons-right">
-                  <input ref="nameItem" class="input" type="text" placeholder="Name">
+                  <input v-model="formState.nameItem" class="input" type="text" placeholder="Name">
                   <span class="icon is-small is-left">
                     <i class="fas fa-user"></i>
                   </span>
                 </p>
-                <p v-if="!formState.textValue" style="color: red;" class="pt-3" id="checkTextValue">Only enter text!</p>
+                <!-- <p v-if="formState.textValue && formState.nameItem.length > 0 && formState.numValue > 0" style="color: red;" class="pt-3"
+                  id="checkTextValue">Only enter text!</p> -->
               </div>
               <div class="field">
                 <p class="control has-icons-left">
-                  <input ref="phoneItem" class="input" type="number" placeholder="Phone">
+                  <input v-model="formState.phoneItem" class="input" type="number" placeholder="Phone">
                   <span class="icon is-small is-left">
                     <i class="fas fa-phone"></i>
                   </span>
                 </p>
               </div>
-              <button class="button py-4 is-info">Checkout</button>
+              <button :disabled="this.formState.valid" class="button py-4 is-info">
+                Checkout
+              </button>
             </form>
           </div>
           <!-- End - Checkout Items -->

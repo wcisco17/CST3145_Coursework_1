@@ -2,6 +2,7 @@ function addToCart(id) {
   const { lessons, cart } = this;
 
   const lesson = lessons.find((lesson) => lesson.id == id)
+
   if (lesson.availibility > 0)
     lesson.availibility--;
   if (lesson.availibility == 0)
@@ -26,16 +27,35 @@ function removeFromCart(lessonIdx) {
 
 function submitForm(e) {
   e.preventDefault()
+  let result = null
+  const name = this.formState.nameItem;
+  const phone = Number(this.formState?.phoneItem);
 
-  const {
-    formState: { textValue, numValue }
-  } = this;
+  const isTextValue = /^[a-zA-Z]+$/.test(name);
+  const isNumberValue = /^[1-9]+$/.test(phone);
 
-  const nameItem = this.$refs.nameItem.value;
-  const phoneItem = this.$refs.phoneItem.value;
+  if (!isNumberValue || !isTextValue) {
+    this.formState.valid = true
+    result = null;
+  }
+  else
+    result = { name, phone }
 
-  const isTextValue = /^[a-zA-Z]+$/.test(nameItem);
-  const isNumberValue = /^[1-10]+$/.test(phoneItem);
+  if (result != null) {
+    // simulate the notification and return to the original state
+    setTimeout(() => {
+      this.isSuccessOrder = false
+      window.location.reload()
+    }, 3000)
+
+    this.isSuccessOrder = true
+
+    return result;
+  }
+}
+
+function reload() {
+  return window.location.reload()
 }
 
 function navigateToCart() {
@@ -50,7 +70,8 @@ const methods = {
   addToCart,
   removeFromCart,
   navigateToCart,
-  submitForm
+  submitForm,
+  reload
 }
 
 export default methods;
