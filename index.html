@@ -16,6 +16,7 @@
       <div class="container mt-1">
         <!-- Start - Header Container -->
         <div class="header-container">
+
           <div class="is-fluid mb-5">
             <h1 class="title">
               Course List
@@ -24,6 +25,7 @@
               All of the <strong>Lessons</strong> available this year.
             </p>
           </div>
+
 
           <div class="cart">
             <!-- Start - Cart Button -->
@@ -51,6 +53,7 @@
                 </option>
               </select>
             </div>
+
           </div>
           <!-- End - Select Container -->
 
@@ -65,6 +68,11 @@
             </div>
           </div>
           <!-- End - Sort -->
+
+        </div>
+
+        <div class="search-box-container">
+          <input v-model="search" class="input is-medium" type="text" placeholder="Try 'Math'">
         </div>
 
         <!-- Start - Card Container -->

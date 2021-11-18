@@ -26,7 +26,7 @@ const lessons = [
     id: '3',
     location: 'London',
     subject: 'Computer Science',
-    price: '$120',
+    price: '$100',
     availibility: 5,
     isSoldOut: false,
     icon: '',
