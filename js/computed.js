@@ -32,7 +32,6 @@ function searchFunc(searchHash, searchValue, next, sortedlessons, i, lessons) {
     // only run this if the first value that we've searched is the same as our (subject or location)
     if ((value == searchValue[next] && key == next)) {
       // we only want the first value
-      console.log("first---- value ", value, lessons[i]);
       if (key == 0 && searchHash.size <= 1) {
         sortedlessons.push(lessons[i])
       }
@@ -42,7 +41,6 @@ function searchFunc(searchHash, searchValue, next, sortedlessons, i, lessons) {
         // start at the next value
         if (searchHash.get(j) !== undefined && searchHash.size > j) {
           // find the next value coresponding to the first
-          console.log("value ", lessons[i]);
           if ((searchHash.get(j) == searchValue[j] && key == j)) sortedlessons.push(lessons[i])
         }
       }
