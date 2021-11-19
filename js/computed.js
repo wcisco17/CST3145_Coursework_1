@@ -12,7 +12,6 @@ function sortLessons() {
     const location = this.lessons[i].location.toLowerCase()
     const subject = this.lessons[i].subject.toLowerCase()
     let next = 0
-
     // searching for subject
     searchFunc(searchHash, subject, next, sortedlessons, i, this.lessons)
 
@@ -32,13 +31,15 @@ function searchFunc(searchHash, searchValue, next, sortedlessons, i, lessons) {
     // only run this if the first value that we've searched is the same as our (subject or location)
     if ((value == searchValue[next] && key == next)) {
       // we only want the first value
-      if (key == 0 && searchHash.size <= 1) {
-        sortedlessons.push(lessons[i])
-      }
+      if (key == 0 && searchHash.size <= 1) sortedlessons.push(lessons[i])
+
       // move on to the next
       next = 1
-      for (let j = next; j < searchValue.length; j++) {
-        // start at the next value
+      for (let j = next; j < searchHash.size; j++) {
+        // assign the next value 
+        next = j
+
+        // start at the next value and so on...
         if (searchHash.get(j) !== undefined && searchHash.size > j) {
           // find the next value coresponding to the first
           if ((searchHash.get(j) == searchValue[j] && key == j)) sortedlessons.push(lessons[i])
@@ -46,7 +47,8 @@ function searchFunc(searchHash, searchValue, next, sortedlessons, i, lessons) {
       }
     }
   }
-  return next
+
+  return sortedlessons
 }
 
 function sortLesson(lessons, value, order) {

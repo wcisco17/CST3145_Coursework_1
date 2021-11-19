@@ -4,7 +4,7 @@ const height = "70"
 const lessons = [
   {
     id: '1',
-    location: 'London',
+    location: 'Bristol',
     subject: 'Math',
     price: '$100',
     availibility: 5,
@@ -14,7 +14,7 @@ const lessons = [
   },
   {
     id: '2',
-    location: 'London',
+    location: 'America',
     subject: 'English',
     price: '$100',
     availibility: 5,
@@ -34,8 +34,8 @@ const lessons = [
   },
   {
     id: '4',
-    location: 'London',
-    subject: 'Chinese Class',
+    location: 'Bristol',
+    subject: 'Mandarin class',
     price: '$200',
     availibility: 5,
     isSoldOut: false,
@@ -54,7 +54,7 @@ const lessons = [
   },
   {
     id: '6',
-    location: 'London',
+    location: 'Bristol',
     subject: 'Law',
     price: '$120',
     availibility: 5,
@@ -84,23 +84,23 @@ const lessons = [
   },
   {
     id: '9',
-    location: 'America',
-    subject: 'Computer Science',
+    location: 'Japan',
+    subject: 'Writing',
     price: '$120',
     availibility: 5,
     isSoldOut: false,
     icon: '',
-    url: `https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80`,
+    url: `https://images.unsplash.com/photo-1486303954368-398fea0e72cd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80`,
   },
   {
     id: '10',
     location: 'London',
-    subject: 'Computer Science',
+    subject: 'Artificial Intelligence',
     price: '$120',
     availibility: 5,
     isSoldOut: false,
     icon: '',
-    url: `https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80`,
+    url: `https://images.unsplash.com/photo-1636690424408-4330adc3e583?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80`,
   },
 ]
 
