@@ -1,81 +1,77 @@
-function addToCart(id) {
-  const { lessons, cart } = this;
+async function addToCart(id) {
+    const lesson = this.lessons.data.find((lesson) => lesson._id === id)
 
-  const lesson = lessons.find((lesson) => lesson.id === id)
-
-  if (lesson.availibility > 0)
-    lesson.availibility--;
-  if (lesson.availibility === 0)
-    lesson.isSoldOut = true
-
-  for (let i = 0; i < cart.length; i++) {
-    if (cart[i].id === lesson.id) {
-      return
+    if (lesson) {
+        let updateValues = (lesson.quantity != null) ? lesson.quantity : lesson.availibility
+        try {
+            const orders = await fetch('https://coursework-init-cst3145.herokuapp.com/add_order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'same-origin',
+                body: JSON.stringify(
+                    {id: lesson._id, quantity: (updateValues) -= 1}
+                )
+            })
+            if (orders.status === 200) {
+                return reload()
+            }
+        } catch (err) {
+            throw new Error(`Error: ${err}`)
+        }
     }
-  }
-
-  return cart.push(lesson)
 }
 
-function removeFromCart(lessonIdx) {
-  const { cart } = this;
+async function submitForm(e) {
+    e.preventDefault()
+    let result = null
+    const name = this.formState.nameItem;
+    const phone = Number(this.formState?.phoneItem);
 
-  if (lessonIdx != null && cart.length > 0) {
-    return cart.find((cartItem, i) => {
-      if (cartItem?.id === lessonIdx) {
-        cartItem.availibility = 5
-        cartItem.isSoldOut = false
-        cart.splice(i, 1)
-      }
-    })
-  }
+    const isTextValue = /^[a-zA-Z]+$/.test(name);
+    const isNumberValue = /^[1-9]+$/.test(phone);
+
+    if (!isNumberValue || !isTextValue) {
+        this.formState.valid = true
+        result = null;
+    } else
+        result = {name, phone}
+
+    if (result) {
+        try {
+            const orders = await fetch('https://coursework-init-cst3145.herokuapp.com/update_lessons', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            if (orders.status === 200) {
+                this.isSuccessOrder = true;
+                return reload()
+            }
+        } catch (err) {
+            throw new Error(`Error: ${err}`)
+        }
+    }
 }
 
-function submitForm(e) {
-  e.preventDefault()
-  let result = null
-  const name = this.formState.nameItem;
-  const phone = Number(this.formState?.phoneItem);
-
-  const isTextValue = /^[a-zA-Z]+$/.test(name);
-  const isNumberValue = /^[1-9]+$/.test(phone);
-
-  if (!isNumberValue || !isTextValue) {
-    this.formState.valid = true
-    result = null;
-  }
-  else
-    result = { name, phone }
-
-  if (!result) {
-    // simulate the notification and return to the original state
-    setTimeout(() => {
-      this.isSuccessOrder = false
-      window.location.reload()
-    }, 3000)
-
-    this.isSuccessOrder = true
-
-    return result;
-  }
-}
-
-function reload() {
-  return window.location.reload()
-}
+const reload = () =>
+    window.location.reload()
 
 function navigateToCart() {
-  const { isCartOpen } = this;
-  this.isCartOpen = !isCartOpen;
+    const {isCartOpen} = this;
+    if (!isCartOpen)
+        this.isCartOpen = true
+    else
+        this.isCartOpen = false
 }
 
 const methods = {
-  addToCart,
-  removeFromCart,
-  navigateToCart,
-  submitForm,
-  reload
+    addToCart,
+    navigateToCart,
+    submitForm,
+    reload,
 }
 
-export default methods;
-
+export {methods}

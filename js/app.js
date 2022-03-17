@@ -1,37 +1,60 @@
-import computed from './computed.js';
-import { lessons } from "./data.js";
-import methods from './methods.js';
+import {methods} from './methods.js';
 
 const lessonsApp = {
-  el: '#app',
-  data: {
-    lessons,
-    cart: [],
-    isCartOpen: false,
-    isSuccessOrder: false,
-    search: '',
-    selected: '',
-    order: 'Ascending',
-    values: ['all', 'subject', 'location', 'price', 'availibility'],
-    formState: {
-      phoneItem: "",
-      nameItem: "",
-      valid: true,
-    }
-  },
+    el: '#app',
+    data: {
+        lessons: {
+            data: [],
+            error: {message: null},
+            loading: false,
+        },
+        cart: [],
+        isCartOpen: false,
+        isSuccessOrder: false,
+        formState: {
+            phoneItem: "",
+            nameItem: "",
+            valid: true,
+        }
+    },
 
-  updated() {
-    const { nameItem, phoneItem } = this.formState
+    async mounted() {
+        await Promise.all([
+            fetch('https://coursework-init-cst3145.herokuapp.com/lessons', {method: 'GET'}),
+            fetch('https://coursework-init-cst3145.herokuapp.com/orders', {method: 'GET'})
+        ]).then(async data => {
+            const [lessons, orders] = data;
+            const lessonsResult = await lessons.json();
+            const ordersResult = await orders.json();
 
-    const isTextValue = /^[a-zA-Z]+$/.test(nameItem);
-    const isNumberValue = /^[1-9]+$/.test(phoneItem);
+            if (lessonsResult.lessons.length >= 0) {
+                this.lessons = {
+                    data: lessonsResult.lessons,
+                    error: {message: null},
+                    loading: false
+                }
+            } else {
+                this.lessons = {
+                    data: [],
+                    error: {message: 'No items in db'},
+                    loading: false
+                }
+            }
+            this.cart = ordersResult;
+        })
 
-    if (isTextValue && isNumberValue) this.formState.valid = false
-    else
-      this.formState.valid = true
-  },
-  methods,
-  computed
+    },
+
+    updated() {
+        const {nameItem, phoneItem} = this.formState
+
+        const isTextValue = /^[a-zA-Z]+$/.test(nameItem);
+        const isNumberValue = /^[1-9]+$/.test(phoneItem);
+
+        if (isTextValue && isNumberValue) this.formState.valid = false
+        else this.formState.valid = true
+    },
+    methods,
 }
 
 export default lessonsApp;

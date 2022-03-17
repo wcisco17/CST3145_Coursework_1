@@ -29,9 +29,9 @@ function searchFunc(searchHash, searchValue, next, sortedlessons, i, lessons) {
   // loop over every value in our hashtable
   for (let [key, value] of searchHash.entries()) {
     // only run this if the first value that we've searched is the same as our (subject or location)
-    if ((value == searchValue[next] && key == next)) {
+    if ((value === searchValue[next] && key === next)) {
       // we only want the first value
-      if (key == 0 && searchHash.size <= 1) sortedlessons.push(lessons[i])
+      if (key === 0 && searchHash.size <= 1) sortedlessons.push(lessons[i])
 
       // move on to the next
       next = 1
