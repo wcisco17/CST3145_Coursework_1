@@ -1,15 +1,15 @@
 function addToCart(id) {
   const { lessons, cart } = this;
 
-  const lesson = lessons.find((lesson) => lesson.id == id)
+  const lesson = lessons.find((lesson) => lesson.id === id)
 
   if (lesson.availibility > 0)
     lesson.availibility--;
-  if (lesson.availibility == 0)
+  if (lesson.availibility === 0)
     lesson.isSoldOut = true
 
   for (let i = 0; i < cart.length; i++) {
-    if (cart[i].id == lesson.id) {
+    if (cart[i].id === lesson.id) {
       return
     }
   }
@@ -21,14 +21,13 @@ function removeFromCart(lessonIdx) {
   const { cart } = this;
 
   if (lessonIdx != null && cart.length > 0) {
-    const deletCartItem = cart.find((cartItem, i) => {
-      if (cartItem?.id == lessonIdx) {
+    return cart.find((cartItem, i) => {
+      if (cartItem?.id === lessonIdx) {
         cartItem.availibility = 5
         cartItem.isSoldOut = false
         cart.splice(i, 1)
       }
     })
-    return deletCartItem
   }
 }
 
@@ -48,7 +47,7 @@ function submitForm(e) {
   else
     result = { name, phone }
 
-  if (result != null) {
+  if (!result) {
     // simulate the notification and return to the original state
     setTimeout(() => {
       this.isSuccessOrder = false
@@ -67,10 +66,7 @@ function reload() {
 
 function navigateToCart() {
   const { isCartOpen } = this;
-  if (!isCartOpen)
-    this.isCartOpen = true
-  else
-    this.isCartOpen = false
+  this.isCartOpen = !isCartOpen;
 }
 
 const methods = {
